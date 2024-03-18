@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "shortcodes": "node shortcodes.js",
-    "png": "node png.js"
+    "png": "node png.js",
+    "png-human": "node png-human.js"
   },
   "keywords": [],
   "author": "",
