@@ -1,0 +1,20 @@
+{
+  "name": "flipbook-render",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "shortcodes": "node shortcodes.js",
+    "png": "node png.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@supabase/supabase-js": "^2.39.8",
+    "d3": "^7.9.0",
+    "dotenv": "^16.4.5",
+    "sharp": "^0.33.2"
+  }
+}
