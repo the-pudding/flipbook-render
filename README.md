@@ -2,7 +2,7 @@
 
 1. `make download`
 2. `npm run shortcodes`
-3. `npm run png`
+3. `npm run png` (note: hard coded to only do those with 360)
 4. `make films`
 
 # Human

@@ -9,7 +9,7 @@ async function toPng({ id, shortcode, frame_index }) {
     `./output/drawings/${id}/${shortcode}.txt`,
     "utf8"
   );
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 320 320" width="${size}" height="${size}"><rect x="0" y="0" width="${size}" height="${size}" fill="#fff" stroke="none"></rect><path d="${txt}" stroke-width="4" stroke="#000" fill="none"></path></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="-4 -4 328 328" width="${size}" height="${size}"><rect x="0" y="0" width="${size}" height="${size}" fill="#fff" stroke="none"></rect><path d="${txt}" stroke-width="4" stroke="#000" fill="none"></path></svg>`;
 
   await sharp(Buffer.from(svg))
     .png()
@@ -26,8 +26,10 @@ async function toPng({ id, shortcode, frame_index }) {
     const data = d3.csvParse(
       fs.readFileSync(`./output/shortcodes/${animation}`, "utf8")
     );
-    for (const frame of data) {
-      await toPng({ id, ...frame });
+    if (data.length === 360) {
+      for (const frame of data) {
+        await toPng({ id, ...frame });
+      }
     }
   }
 })();
