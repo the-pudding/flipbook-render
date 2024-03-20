@@ -2,6 +2,7 @@ import "dotenv/config";
 import fs from "fs";
 import * as d3 from "d3";
 import { createClient } from "@supabase/supabase-js";
+import { mkdirp } from "mkdirp";
 
 const supabaseUrl = process.env.SUPABASE_URL_FLIPBOOK;
 const supabaseKey = process.env.SUPABASE_SERVICE_KEY_FLIPBOOK;
@@ -45,6 +46,7 @@ export async function getAnimations() {
 }
 
 (async () => {
+  mkdirp.sync("./output/shortcodes");
   const animations = await getAnimations();
   if (!animations) return;
 

@@ -1,6 +1,7 @@
 import sharp from "sharp";
 import fs from "fs";
 import * as d3 from "d3";
+import { mkdirp } from "mkdirp";
 
 const size = 1080;
 
@@ -17,16 +18,18 @@ async function toPng({ id, shortcode, frame_index }) {
 }
 
 (async () => {
+  mkdirp.sync("./output/png");
   const animations = fs
     .readdirSync("./output/shortcodes")
     .filter((d) => d.includes(".csv"));
 
   for (const animation of animations) {
     const id = animation.replace(".csv", "");
+    mkdirp.sync(`./output/png/${id}`);
     const data = d3.csvParse(
       fs.readFileSync(`./output/shortcodes/${animation}`, "utf8")
     );
-    if (data.length === 360) {
+    if (data.length >= 360) {
       for (const frame of data) {
         await toPng({ id, ...frame });
       }

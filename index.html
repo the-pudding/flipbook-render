@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			main {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			img {
+				display: block;
+				margin: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>draw a circle</h1>
+		<main></main>
+		<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+		<script>
+			(() => {
+				const count = 1878;
+				const files = d3.range(count).map(d3.format("05"));
+				// render an image for each file
+				d3.select("main").selectAll("img")
+					.data(files)
+					.join("img")
+					.attr("src", d => `output/png-human-film/${d}.png`)
+					.attr("width", 160)
+					.attr("height", 160);
+			})();
+			
+		</script>
+	</body>
+</html>
