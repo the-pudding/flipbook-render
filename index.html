@@ -14,6 +14,7 @@
 			img {
 				display: block;
 				margin: auto;
+				width: 100%;
 			}
 		</style>
 	</head>
@@ -24,15 +25,14 @@
 
 		<script>
 			(() => {
-				const count = 1878;
-				const files = d3.range(count).map(d3.format("05"));
+				const count = 21;
+				const files = d3.range(count + 1);
 				// render an image for each file
 				d3.select("main").selectAll("img")
 					.data(files)
 					.join("img")
-					.attr("src", d => `output/png-human-film/${d}.png`)
-					.attr("width", 160)
-					.attr("height", 160);
+					.attr("src", d => `output/sprite-human/${d}.png`)
+					
 			})();
 			
 		</script>
