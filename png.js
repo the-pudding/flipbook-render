@@ -29,7 +29,10 @@ async function toPng({ id, shortcode, frame_index }) {
     const data = d3.csvParse(
       fs.readFileSync(`./output/shortcodes/${animation}`, "utf8")
     );
-    if ((id < 25 && data.length >= 360) || (id >= 25 && data.length === 240)) {
+    const shouldConvert =
+      ((id < 25 && data.length >= 360) || (id >= 25 && data.length >= 240)) &&
+      id !== 28;
+    if (shouldConvert) {
       for (const frame of data) {
         await toPng({ id, ...frame });
       }
