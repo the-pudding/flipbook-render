@@ -10,7 +10,7 @@ async function toPng({ id, shortcode, frame_index }) {
     `./output/drawings/${id}/${shortcode}.txt`,
     "utf8"
   );
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="-4 -4 328 328" width="${size}" height="${size}"><rect x="0" y="0" width="328" height="328" fill="#fff" stroke="none"></rect><path d="${txt}" stroke-width="4" stroke="#000" fill="none"></path></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="-4 -4 328 328" width="${size}" height="${size}"><rect x="-4" y="-4" width="328" height="328" fill="#fff" stroke="none"></rect><path d="${txt}" stroke-width="4" stroke="#000" fill="none"></path></svg>`;
 
   await sharp(Buffer.from(svg))
     .png()

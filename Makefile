@@ -50,5 +50,5 @@ join-6:
 	"[0:v][1:v][2:v][3:v]xstack=inputs=4:layout=0_0|w0_0|0_h0|w0_h0[v]" -map "[v]" \
 	-s 2160x2160 output/films/join-6.mp4
 
-
+join: join-1 join-2 join-3 join-4 join-5 join-6
 
