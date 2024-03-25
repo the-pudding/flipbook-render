@@ -6,7 +6,7 @@ human:
 
 films:
 	# rm output/films/*.mp4
-	@for i in {1..27}; do \
+	@for i in {28..28}; do \
 		echo "Processing folder $$i..."; \
 		cd output/png/$$i; \
 		ffmpeg -framerate 12 -i %05d.png -c:v libx264 -r 30 -pix_fmt yuv420p ../../films/$$i.mp4; \
