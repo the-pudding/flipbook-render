@@ -25,7 +25,9 @@
 
 		<script>
 			(() => {
-				const count = 21;
+				const total = 3816;
+				const sz = 72;
+				const count = Math.floor(total / sz);
 				const files = d3.range(count + 1);
 				// render an image for each file
 				d3.select("main").selectAll("img")

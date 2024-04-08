@@ -38,10 +38,11 @@ function chunk(src, i) {
     .filter((d) => d.includes(".png"))
     .map((d) => `./output/png-human-film/${d}`);
 
-  const chunks = d3.range(0, images.length, 100);
+  const sz = 72;
+  const chunks = d3.range(0, images.length, sz);
   let i = 0;
   for (let c of chunks) {
-    const src = images.slice(c, c + 100);
+    const src = images.slice(c, c + sz);
     await chunk(src, i);
     i++;
   }
