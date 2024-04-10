@@ -34,11 +34,11 @@ function chunk(src, i) {
 (async () => {
   mkdirp.sync("./output/sprite-human");
   const images = fs
-    .readdirSync("./output/png-human-film")
+    .readdirSync("./output/png-human")
     .filter((d) => d.includes(".png"))
-    .map((d) => `./output/png-human-film/${d}`);
+    .map((d) => `./output/png-human/${d}`);
 
-  const sz = 72;
+  const sz = 77;
   const chunks = d3.range(0, images.length, sz);
   let i = 0;
   for (let c of chunks) {

@@ -53,6 +53,30 @@
 				font-weight: bold;
 			}
 
+			#humans {
+				margin: 16px auto;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+
+			.human {
+				margin: 2px 2px 16px 2px;
+			}
+
+			.human p {
+				text-align: center;
+				font-size: 12px;
+				color: purple;
+			}
+
+			.human.info p {
+				color: green
+			}
+
+			.human img {
+				width: auto;
+			}
 		</style>
 	</head>
 	<body>
@@ -81,8 +105,9 @@
 			</div>
 			</section>
 			
-			<section>
+			<section id="circles">
 			<h2>Draw a circle</h2>
+			<div id="humans"></div>
 			</section>
 
 		</main>
@@ -136,21 +161,27 @@
 				});
 			}
 
-			function circles() {
-				const total = 3816;
-				const sz = 72;
-				const count = Math.floor(total / sz);
-				const files = d3.range(count + 1);
-				// render an image for each file
-				d3.select("main").selectAll("img")
-					.data(files)
-					.join("img")
-					.attr("src", d => `output/sprite-human/${d}.png`)
+			async function circles() {
+				const data = await d3.csv("./shortcodes-human/data.csv")
+				const withInfo = data.map(d => ({
+					...d,
+					info: d.name === "true" || d.phone === "true" || d.email === "true"
+				}));
+				withInfo.sort((a, b) => d3.ascending(a.info, b.info) || d3.ascending(a.shortcode, b.shortcode));
+				const h = d3.select("#humans").selectAll("div")
+					.data(withInfo)
+					.join("div")
+					.attr("class", "human");
 				
+				h.classed("info", d => d.info);
+				h.append("p").text(d => d.shortcode);
+				h.append("img").attr("src", d => `./png-human/${d.shortcode}.png`)
+					
 			}
+
 			(() => {
-				// circles();
 				animations();
+				circles();
 			})();
 			
 		</script>

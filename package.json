@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "shortcodes": "node shortcodes.js",
+    "shortcodes-human": "node shortcodes-human.js",
     "png": "node png.js",
     "png-web": "node png-web.js",
     "png-human": "node png-human.js",

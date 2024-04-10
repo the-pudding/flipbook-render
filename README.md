@@ -9,5 +9,6 @@
 
 # Human
 1. `make human`
+2. `npm run shortcodes-human`
 2. `npm run png-human`
 3. `npm run sprite-human`
