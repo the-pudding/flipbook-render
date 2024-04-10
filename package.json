@@ -6,6 +6,7 @@
   "scripts": {
     "shortcodes": "node shortcodes.js",
     "png": "node png.js",
+    "png-web": "node png-web.js",
     "png-human": "node png-human.js",
     "sprite-human": "node sprite-human.js"
   },

@@ -8,11 +8,8 @@ const supabaseUrl = process.env.SUPABASE_URL_FLIPBOOK;
 const supabaseKey = process.env.SUPABASE_SERVICE_KEY_FLIPBOOK;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-async function getFrames(id) {
+async function getFrames(id, data = [], pageIndex = 0) {
   const limit = 1000;
-  let pageIndex = 0;
-  let data = [];
-  let hasMore = true;
 
   const response = await supabase
     .from("frame")
@@ -25,13 +22,13 @@ async function getFrames(id) {
     throw new Error("getFrames failed");
   } else if (response.data && response.data.length) {
     data = [...data, ...response.data];
+    console.log(response.data.length);
     if (response.data.length < limit) {
-      hasMore = false;
+      return data;
+    } else {
+      return getFrames(id, data, pageIndex + 1);
     }
-    pageIndex++;
-  } else hasMorePages = false;
-
-  return data;
+  } else return data;
 }
 
 export async function getAnimations() {
@@ -51,6 +48,8 @@ export async function getAnimations() {
   if (!animations) return;
 
   for (const animation of animations) {
+    if (animation.id !== 28) continue;
+    console.log(animation.id);
     const frames = await getFrames(animation.id);
     frames.sort((a, b) => d3.ascending(a.frame_index, b.frame_index));
     const csv = d3.csvFormat(frames);

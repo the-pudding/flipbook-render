@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			main {
+				padding: 16px;
+				font-family: 'Courier New', Courier, monospace;
+			}
+			
+			img {
+				display: block;
+				margin: auto;
+				width: 100%;
+			}
+
+			h2 {
+				text-align: center;
+			}
+			
+			section {
+				margin: 128px auto;
+			}
+
+			#animations {
+				max-width: 640px;
+				margin: 0 auto;
+			}
+			
+			#frames {
+				max-width: 400px;
+				display: flex;
+				flex-wrap: wrap;
+				margin: 16px auto;
+			}
+
+			#frames img {
+				width: 190px;
+				border: 1px solid #ccc;
+				margin: 4px;
+			}
+
+			#frame-slider {
+				width: 100%;
+			}
+
+			#animations p {
+				text-align: center;
+				font-weight: bold;
+			}
+
+		</style>
+	</head>
+	<body>
+		
+		<main>
+			<section id="animations">
+			<h2>Animations</h2>
+			<div>
+				<div id="frames">
+					<img src="./png-web/1/00000.png">
+					<img src="./png-web/7/00000.png">
+					<img src="./png-web/13/00000.png">
+					<img src="./png-web/19/00000.png">
+				</div>
+				<p id="frame">1</p>
+				<input type="range" id="frame-slider" min="0" max="359" value="0" />
+				<p><select>
+					<option value="1">line</option>
+					<option value="2">triangle</option>
+					<option value="3">circle</option>
+					<option value="4">fish</option>
+					<option value="5">spiral</option>
+					<option value="6">texas</option>
+				</select>
+				</p>
+			</div>
+			</section>
+			
+			<section>
+			<h2>Draw a circle</h2>
+			</section>
+
+		</main>
+		<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+		<script>
+			let animation = 1;
+			let frame = 0;
+
+			function loadImage(url) {
+				return new Promise((resolve, reject) => {
+					const img = new Image();
+					img.onload = () => resolve(img);
+					img.onerror = () => reject(`error loading ${url}`);
+					img.src = url;
+				});
+				}
+
+
+			function updateFrames() {
+				d3.select("#frame").text(frame + 1);
+				d3.range(4).forEach(i => {
+					const dir = 6 * i + animation;
+					d3.select(`#frames img:nth-of-type(${i + 1})`)
+						.attr("src", `png-web/${dir}/${d3.format("05")(frame)}.png`)
+				});
+			}
+
+			async function updateAnimation() {
+				updateFrames();
+				const files = d3.range(360);
+				const paths = d3.range(4).map(i => {
+					const dir = 6 * i + animation;
+					return files.map(d => `png-web/${dir}/${d3.format("05")(d)}.png`)
+				});
+
+				const flat = [].concat(...paths);
+				const images = await Promise.all(flat.map(loadImage));
+			}
+			
+			function animations() {
+				d3.select("select").on("change", async function() {
+					animation = +this.value;
+					updateAnimation();
+				});
+
+				d3.select("#frame-slider").on("input", function() {
+					frame = +this.value;
+					updateFrames();
+					
+				});
+			}
+
+			function circles() {
+				const total = 3816;
+				const sz = 72;
+				const count = Math.floor(total / sz);
+				const files = d3.range(count + 1);
+				// render an image for each file
+				d3.select("main").selectAll("img")
+					.data(files)
+					.join("img")
+					.attr("src", d => `output/sprite-human/${d}.png`)
+				
+			}
+			(() => {
+				// circles();
+				animations();
+			})();
+			
+		</script>
+	</body>
+</html>

@@ -10,7 +10,7 @@ async function toPng({ id, shortcode, frame_index }) {
     `./output/drawings/${id}/${shortcode}.txt`,
     "utf8"
   );
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="-4 -4 328 328" width="${size}" height="${size}"><rect x="-4" y="-4" width="328" height="328" fill="#fff" stroke="none"></rect><path d="${txt}" stroke-width="4" stroke="#000" fill="none"></path></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="-4 -4 328 328" width="${size}" height="${size}"><rect x="-4" y="-4" width="328" height="328" fill="#fff" stroke="none"></rect><path d="${txt}" stroke-width="4" stroke="#000" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>`;
 
   await sharp(Buffer.from(svg))
     .png()
@@ -25,6 +25,7 @@ async function toPng({ id, shortcode, frame_index }) {
 
   for (const animation of animations) {
     const id = +animation.replace(".csv", "");
+    // if (id !== 28) continue;
     mkdirp.sync(`./output/png/${id}`);
     const data = d3.csvParse(
       fs.readFileSync(`./output/shortcodes/${animation}`, "utf8")
@@ -37,7 +38,7 @@ async function toPng({ id, shortcode, frame_index }) {
       try {
         await toPng({ id, ...frame });
       } catch (err) {
-        console.log("missing", frame.shortcode);
+        console.log("missing", id, frame.shortcode);
       }
       // }
     }

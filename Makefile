@@ -1,6 +1,9 @@
 download:
 	aws s3 cp s3://pudding.cool/projects/flipbook-data/drawings ./output/drawings --recursive
 
+download28:
+	aws s3 cp s3://pudding.cool/projects/flipbook-data/drawings/28 ./output/drawings/28 --recursive
+
 human:
 	aws s3 cp s3://pudding.cool/projects/flipbook-data/human ./output/human --recursive
 
@@ -9,7 +12,7 @@ films:
 	@for i in {28..28}; do \
 		echo "Processing folder $$i..."; \
 		cd output/png/$$i; \
-		ffmpeg -framerate 12 -i %05d.png -c:v libx264 -r 30 -pix_fmt yuv420p ../../films/$$i.mp4; \
+		ffmpeg -framerate 30 -i %05d.png -c:v libx264 -r 30 -pix_fmt yuv420p ../../films/$$i.mp4; \
 		cd ../../..; \
 	done
 	@echo "Processing complete."
